@@ -1,5 +1,6 @@
 package com.rayyanhunerkar;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,7 @@ import java.util.Optional;
 
 @SpringBootApplication
 @RestController
-@RequestMapping("/api/v1/customers")
+@RequestMapping("/customers")
 public class Main {
     private final CustomerRepository customerRepository;
 
@@ -27,7 +28,7 @@ public class Main {
     }
 
     @PostMapping
-    public void addCustomer(@RequestBody CustomerRequest request) {
+    public void addCustomer(@RequestBody @NotNull CustomerRequest request) {
         Customer customer = new Customer();
         customer.setName(request.name);
         customer.setAge(request.age);

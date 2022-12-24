@@ -1,5 +1,7 @@
 server:
   port: 3000
+  servlet:
+    context-path: /api/v1
 
 spring:
   datasource:
@@ -17,4 +19,8 @@ spring:
   main:
     web-application-type: servlet
 
+
+springdoc:
+  swagger-ui:
+    path: /swagger
 
