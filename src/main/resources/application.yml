@@ -19,7 +19,6 @@ spring:
   main:
     web-application-type: servlet
 
-
 springdoc:
   swagger-ui:
     path: /swagger
