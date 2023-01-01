@@ -1,7 +1,10 @@
 package com.rayyanhunerkar.model;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -33,8 +36,24 @@ public class Theatre {
     )
     private String location;
 
-//    @ManyToMany(mappedBy = "theatres")
-//    private Set<Customer> customers;
+    @Column(name = "created_at", nullable = false)
+    @CreatedDate
+    private Date created_at;
+
+    @Column(name = "updated_at", nullable = false)
+    @LastModifiedDate
+    private Date updated_at;
+
+    public Theatre(UUID id, String name, String location, Date createdAt, Date updatedAt) {
+        this.id = id;
+        this.name = name;
+        this.location = location;
+        this.created_at = createdAt;
+        this.updated_at = updatedAt;
+    }
+
+    public Theatre() {
+    }
 
     @Override
     public String toString() {
@@ -42,6 +61,8 @@ public class Theatre {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", location='" + location + '\'' +
+                ", createdAt=" + created_at +
+                ", updatedAt=" + updated_at +
                 '}';
     }
 
@@ -50,29 +71,28 @@ public class Theatre {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Theatre theatre = (Theatre) o;
-        return Objects.equals(id, theatre.id) && Objects.equals(name, theatre.name) && Objects.equals(location, theatre.location);
+        return Objects.equals(id, theatre.id) && Objects.equals(name, theatre.name) && Objects.equals(location, theatre.location) && Objects.equals(created_at, theatre.created_at) && Objects.equals(updated_at, theatre.updated_at);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, location);
+        return Objects.hash(id, name, location, created_at, updated_at);
     }
 
-//    public Set<Customer> getCustomers() {
-//        return customers;
-//    }
-//
-//    public void setCustomers(Set<Customer> customers) {
-//        this.customers = customers;
-//    }
-
-    public Theatre(UUID id, String name, String location) {
-        this.id = UUID.randomUUID();
-        this.name = name;
-        this.location = location;
+    public Date getCreated_at() {
+        return created_at;
     }
 
-    public Theatre() {
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+    }
+
+    public Date getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(Date updated_at) {
+        this.updated_at = updated_at;
     }
 
     public UUID getId() {

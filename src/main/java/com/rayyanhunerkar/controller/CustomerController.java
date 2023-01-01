@@ -66,7 +66,7 @@ public class CustomerController {
             String name,
             String email,
             Integer age,
-            Set<Theatre> theatres
+            List<Theatre> theatres
     ) {
 
     }

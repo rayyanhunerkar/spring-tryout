@@ -16,6 +16,18 @@ services:
       - db
     restart: unless-stopped
 
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - db
+    depends_on:
+      - db
+
 networks:
   db:
     driver: bridge

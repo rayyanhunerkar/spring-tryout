@@ -1,10 +1,10 @@
 package com.rayyanhunerkar.model;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "customer")
@@ -41,21 +41,60 @@ public class Customer {
             name = "age"
     )
     @JoinTable(
-            name = "theatres_used",
+            name = "theatres_customers",
             joinColumns = @JoinColumn(name = "customer_id"),
             inverseJoinColumns = @JoinColumn(name = "theatre_id")
     )
-    private Set<Theatre> theatres;
+    private List<Theatre> theatres;
 
-    public Customer(UUID id, String name, String email, Integer age, Set<Theatre> theatres) {
+    @Column(name = "created_at", nullable = false)
+    @CreatedDate
+    private Date createdAt;
+
+    @Column(name = "updated_at", nullable = false)
+    @LastModifiedDate
+    private Date updatedAt;
+
+    public Customer(UUID id, String name, String email, Integer age, List<Theatre> theatres, Date createdAt, Date updatedAt) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.age = age;
         this.theatres = theatres;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Customer() {
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
+                ", theatres=" + theatres +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 
     @Override
@@ -63,19 +102,19 @@ public class Customer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(email, customer.email) && Objects.equals(age, customer.age) && Objects.equals(theatres, customer.theatres);
+        return Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(email, customer.email) && Objects.equals(age, customer.age) && Objects.equals(theatres, customer.theatres) && Objects.equals(createdAt, customer.createdAt) && Objects.equals(updatedAt, customer.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email, age, theatres);
+        return Objects.hash(id, name, email, age, theatres, createdAt, updatedAt);
     }
 
-    public Set<Theatre> getTheatres() {
+    public List<Theatre> getTheatres() {
         return theatres;
     }
 
-    public void setTheatres(Set<Theatre> theatres) {
+    public void setTheatres(List<Theatre> theatres) {
         this.theatres = theatres;
     }
 
@@ -111,15 +150,5 @@ public class Customer {
         this.age = age;
     }
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", age=" + age +
-                ", theatres=" + theatres +
-                '}';
-    }
 }
 
